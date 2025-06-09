@@ -1,0 +1,149 @@
+Vraag: Geef alle CVE's weer waarvan de eerste 3 karakters 'CVE' zijn.
+SQL: SELECT cve FROM vulnerability WHERE cve LIKE 'CVE%';
+
+Vraag: Verhoog de confidence score van alle vulnerabilities met 5.
+SQL: UPDATE vulnerability SET confidence = confidence + 5;
+
+Vraag: Geef het aantal vulnerabilities weer per severity level, maar alleen voor die levels die meer dan 5 vulnerabilities hebben.
+SQL: SELECT severity, COUNT(*) FROM vulnerability GROUP BY severity HAVING COUNT(*) > 5;
+
+Vraag: Geef de CVE en de titel van de kwetsbaarheden weer met de 2 hoogste CVSS scores.
+SQL: SELECT cve, title FROM vulnerability ORDER BY cvss DESC LIMIT 2;
+
+Vraag: Geef de average age van de vulnerabilities weer met severity low en medium.
+SQL: SELECT AVG(age) FROM vulnerability WHERE severity IN ('low', 'medium');
+
+Vraag: Geef alle vulnerabilities weer met een CVSS score hoger dan 9 en een EPSS score lager dan 0.1.
+SQL: SELECT * FROM vulnerability WHERE cvss > 9 AND epss < 0.1;
+
+Vraag: Geef de CVE en titel weer van de kwetsbaarheden met de langste titels. Beperk de resultaten tot de top 5.
+SQL: SELECT cve, title FROM vulnerability ORDER BY LENGTH(title) DESC LIMIT 5;
+
+Vraag: Geef de distinct combinatie van severity en KEV waardes.
+SQL: SELECT DISTINCT severity, kev FROM vulnerability;
+
+Vraag: Geef de vulnerabilities weer met een confidence score die een even getal is.
+SQL: SELECT * FROM vulnerability WHERE confidence % 2 = 0;
+
+Vraag: Geef de vulnerabilities weer die ouder zijn dan de gemiddelde leeftijd van alle vulnerabilities.
+SQL: SELECT * FROM vulnerability WHERE age > (SELECT AVG(age) FROM vulnerability);
+
+Vraag: Geef de CVE's weer van de vulnerabilities waarvan de EPSS score hoger is dan de EPSS score van de vulnerability met CVE 'CVE-2023-1234'.
+SQL: SELECT cve FROM vulnerability WHERE epss > (SELECT epss FROM vulnerability WHERE cve = 'CVE-2023-1234');
+
+Vraag: Geef de titels van alle kwetsbaarheden die beginnen met een letter 'A' tot 'M'.
+SQL: SELECT title FROM vulnerability WHERE SUBSTR(title, 1, 1) BETWEEN 'A' AND 'M'; (Afhankelijk van de database, kan de syntax voor SUBSTR verschillen)
+
+Vraag: Hoeveel kwetsbaarheden hebben een leeftijd die deelbaar is door 7?
+SQL: SELECT COUNT(*) FROM vulnerability WHERE age % 7 = 0;
+
+Vraag: Geef de severity levels weer in hoofdletters.
+SQL: SELECT UPPER(severity) FROM vulnerability;
+
+Vraag: Geef de severity levels weer in kleine letters.
+SQL: SELECT LOWER(severity) FROM vulnerability;
+
+Vraag: Geef de langste titel weer.
+SQL: SELECT title FROM vulnerability ORDER BY LENGTH(title) DESC LIMIT 1;
+
+Vraag: Geef het aantal vulnerabilities weer waarbij de title NULL is of leeg.
+SQL: SELECT COUNT(*) FROM vulnerability WHERE title IS NULL OR title = '';
+
+Vraag: Geef de top 3 confidence scores weer, samen met het aantal vulnerabilities met die score.
+SQL: SELECT confidence, COUNT(*) AS count FROM vulnerability GROUP BY confidence ORDER BY confidence DESC LIMIT 3;
+
+Vraag: Geef de kwetsbaarheden weer waar de confidence score niet 100 is.
+SQL: SELECT * FROM vulnerability WHERE confidence <> 100;
+
+Vraag: Geef de CVE en CVSS score weer van de vulnerability met de 2e hoogste CVSS score.
+SQL: SELECT cve, cvss FROM vulnerability ORDER BY cvss DESC LIMIT 1 OFFSET 1;
+
+Vraag: Geef alle kwetsbaarheden weer waarvan het laatste karakter van de CVE een nummer is.
+SQL: SELECT * FROM vulnerability WHERE SUBSTR(cve, LENGTH(cve), 1) BETWEEN '0' AND '9';
+
+Vraag: Geef de titels weer van alle kwetsbaarheden waarin de letters "XSS" voorkomen (case-insensitive).
+SQL: SELECT title FROM vulnerability WHERE LOWER(title) LIKE '%xss%';
+
+Vraag: Geef de CVE en CVSS weer van alle vulnerabilities waarvan de CVSS score een geheel getal is (bv 7.0).
+SQL: SELECT cve, cvss FROM vulnerability WHERE cvss = FLOOR(cvss);
+
+Vraag: Geef de gemiddelde confidence score weer voor elke severity.
+SQL: SELECT severity, AVG(confidence) FROM vulnerability GROUP BY severity;
+
+Vraag: Geef het aantal vulnerabilities weer per CWE, maar alleen voor CWE's die meer dan 5 karakters lang zijn.
+SQL: SELECT cwe, COUNT(*) FROM vulnerability WHERE LENGTH(cwe) > 5 GROUP BY cwe;
+
+Vraag: Geef de confidence weer van de jongste kwetsbaarheid.
+SQL: SELECT confidence FROM vulnerability ORDER BY age ASC LIMIT 1;
+
+Vraag: Geef alle vulnerabilities weer waarvan de CVSS score in de buurt ligt van 5 (bv tussen 4.5 en 5.5).
+SQL: SELECT * FROM vulnerability WHERE cvss BETWEEN 4.5 AND 5.5;
+
+Vraag: Geef de CVE's van de meest recente vulnerabilities weer, maar alleen als de recentste vulnerabilities een severity van 'critical' hebben.
+SQL: SELECT cve FROM vulnerability WHERE age = (SELECT MIN(age) FROM vulnerability WHERE severity = 'critical') AND severity = 'critical';
+
+Vraag: Verhoog de CVSS score van alle 'low' severity vulnerabilities met 0.5.
+SQL: UPDATE vulnerability SET cvss = cvss + 0.5 WHERE severity = 'low';
+
+Vraag: Maak een lijst van alle mogelijke combinaties van severity en KEV.
+SQL: SELECT DISTINCT severity, kev FROM vulnerability;
+
+Vraag: Geef de CVE weer van de oudste 'high' severity vulnerability die niet in de KEV catalog staat.
+SQL: SELECT cve FROM vulnerability WHERE severity = 'high' AND kev = FALSE ORDER BY age DESC LIMIT 1;
+
+Vraag: Geef alle vulnerabilities weer die in de KEV staan en een CVSS score hoger dan 7 hebben.
+SQL: SELECT * FROM vulnerability WHERE kev = TRUE AND cvss > 7;
+
+Vraag: Hoeveel unieke titels zijn er?
+SQL: SELECT COUNT(DISTINCT title) FROM vulnerability;
+
+Vraag: Geef de severity weer van de vulnerability met de hoogste confidence.
+SQL: SELECT severity FROM vulnerability ORDER BY confidence DESC LIMIT 1;
+
+Vraag: Geef de vulnerabilities weer waarvan de confidence score meer dan 2 keer zo hoog is als de EPSS score.
+SQL: SELECT * FROM vulnerability WHERE confidence > 2 * epss;
+
+Vraag: Geef de kwetsbaarheden weer die geen severity waarde hebben.
+SQL: SELECT * FROM vulnerability WHERE severity IS NULL;
+
+Vraag: Update de severity naar 'informational' waar deze NULL is.
+SQL: UPDATE vulnerability SET severity = 'informational' WHERE severity IS NULL;
+
+Vraag: Selecteer de gemiddelde CVSS score per severity.
+SQL: SELECT severity, AVG(cvss) FROM vulnerability GROUP BY severity;
+
+Vraag: Selecteer de vulnerabilities waarvan de titel het woord 'injection' bevat.
+SQL: SELECT * FROM vulnerability WHERE title LIKE '%injection%';
+
+Vraag: Selecteer de vulnerabilities met een confidence score boven het gemiddelde.
+SQL: SELECT * FROM vulnerability WHERE confidence > (SELECT AVG(confidence) FROM vulnerability);
+
+Vraag: Geef het aantal vulnerabilities weer die zowel in de KEV catalog staan als een critical severity hebben.
+SQL: SELECT COUNT(*) FROM vulnerability WHERE kev = TRUE AND severity = 'critical';
+
+Vraag: Geef de CVE's weer van de oudste 5 kwetsbaarheden.
+SQL: SELECT cve FROM vulnerability ORDER BY age DESC LIMIT 5;
+
+Vraag: Geef de gemiddelde leeftijd van kwetsbaarheden met een CVSS score hoger dan 8 weer.
+SQL: SELECT AVG(age) FROM vulnerability WHERE cvss > 8;
+
+Vraag: Geef de titels weer van kwetsbaarheden met een confidence van 100 en die in de KEV catalog staan.
+SQL: SELECT title FROM vulnerability WHERE confidence = 100 AND kev = TRUE;
+
+Vraag: Geef de CWE's weer die voorkomen in meer dan 5 kwetsbaarheden.
+SQL: SELECT cwe FROM vulnerability GROUP BY cwe HAVING COUNT(*) > 5;
+
+Vraag: Geef alle informatie weer over de vulnerabilities waar de severity ofwel 'critical' ofwel 'high' is en de cvss score hoger dan 9.
+SQL: SELECT * FROM vulnerability WHERE (severity = 'critical' OR severity = 'high') AND cvss > 9;
+
+Vraag: Geef de titels van de vulnerabilities weer die beginnen met een hoofdletter.
+SQL: SELECT title FROM vulnerability WHERE title LIKE '[A-Z]%'; (Afhankelijk van de database, kan de syntax voor character classes variëren)
+
+Vraag: Geef de gemiddelde EPSS score weer, afgerond op 2 decimalen.
+SQL: SELECT ROUND(AVG(epss), 2) FROM vulnerability;
+
+Vraag: Selecteer alle vulnerabilities, en voeg een extra kolom toe genaamd "Status" die "Known Exploit" bevat als KEV waar is, anders "Potential Exploit".
+SQL: SELECT *, CASE WHEN kev = TRUE THEN 'Known Exploit' ELSE 'Potential Exploit' END AS Status FROM vulnerability;
+
+Vraag: Tel het aantal vulnerabilities per combinatie van severity en KEV.
+SQL: SELECT severity, kev, COUNT(*) FROM vulnerability GROUP BY severity, kev;

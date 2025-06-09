@@ -1,0 +1,149 @@
+Vraag: Geef alle CVE's weer.
+SQL: SELECT cve FROM vulnerability;
+
+Vraag: Geef de titel en ernst weer van alle kwetsbaarheden.
+SQL: SELECT title, severity FROM vulnerability;
+
+Vraag: Geef alle informatie weer over kwetsbaarheden met een hoge ernst.
+SQL: SELECT * FROM vulnerability WHERE severity = 'high';
+
+Vraag: Geef alle informatie weer over kwetsbaarheden met een CVSS score hoger dan 7.0.
+SQL: SELECT * FROM vulnerability WHERE cvss > 7.0;
+
+Vraag: Geef de CVE en titel weer van alle kwetsbaarheden met een leeftijd van meer dan 365 dagen.
+SQL: SELECT cve, title FROM vulnerability WHERE age > 365;
+
+Vraag: Geef alle kwetsbaarheden weer die zijn opgenomen in de KEV catalogus (Known Exploited Vulnerabilities).
+SQL: SELECT * FROM vulnerability WHERE kev = TRUE;
+
+Vraag: Hoeveel kwetsbaarheden hebben een kritieke ernst?
+SQL: SELECT COUNT(*) FROM vulnerability WHERE severity = 'critical';
+
+Vraag: Wat is de gemiddelde CVSS score van alle kwetsbaarheden?
+SQL: SELECT AVG(cvss) FROM vulnerability;
+
+Vraag: Wat is de maximale CVSS score?
+SQL: SELECT MAX(cvss) FROM vulnerability;
+
+Vraag: Wat is de minimale CVSS score?
+SQL: SELECT MIN(cvss) FROM vulnerability;
+
+Vraag: Geef alle unieke ernst niveaus weer.
+SQL: SELECT DISTINCT severity FROM vulnerability;
+
+Vraag: Geef de CVE's en titels weer van kwetsbaarheden met een confidence score van minstens 90.
+SQL: SELECT cve, title FROM vulnerability WHERE confidence >= 90;
+
+Vraag: Geef de CVE's weer van kwetsbaarheden waarvan de titel het woord 'overflow' bevat.
+SQL: SELECT cve FROM vulnerability WHERE title LIKE '%overflow%';
+
+Vraag: Geef alle kwetsbaarheden weer met een CVSS score tussen 5.0 en 7.0.
+SQL: SELECT * FROM vulnerability WHERE cvss BETWEEN 5.0 AND 7.0;
+
+Vraag: Geef de kwetsbaarheden weer met een ernst van 'low' of 'medium'.
+SQL: SELECT * FROM vulnerability WHERE severity IN ('low', 'medium');
+
+Vraag: Sorteer alle kwetsbaarheden op CVSS score, aflopend.
+SQL: SELECT * FROM vulnerability ORDER BY cvss DESC;
+
+Vraag: Sorteer alle kwetsbaarheden op leeftijd, oplopend.
+SQL: SELECT * FROM vulnerability ORDER BY age ASC;
+
+Vraag: Geef de 5 nieuwste kwetsbaarheden weer (gesorteerd op leeftijd).
+SQL: SELECT * FROM vulnerability ORDER BY age ASC LIMIT 5;
+
+Vraag: Geef de 3 oudste kwetsbaarheden weer.
+SQL: SELECT * FROM vulnerability ORDER BY age DESC LIMIT 3;
+
+Vraag: Hoeveel kwetsbaarheden hebben een CWE waarde die begint met "CWE-1"?
+SQL: SELECT COUNT(*) FROM vulnerability WHERE cwe LIKE 'CWE-1%';
+
+Vraag: Geef alle kwetsbaarheden weer waarbij de EPSS score hoger is dan de CVSS score.
+SQL: SELECT * FROM vulnerability WHERE epss > cvss;
+
+Vraag: Hoeveel kwetsbaarheden zijn er voor elke ernst?
+SQL: SELECT severity, COUNT(*) FROM vulnerability GROUP BY severity;
+
+Vraag: Wat is de gemiddelde leeftijd van kwetsbaarheden met een hoge ernst?
+SQL: SELECT AVG(age) FROM vulnerability WHERE severity = 'high';
+
+Vraag: Geef de CWE waarde en het aantal kwetsbaarheden voor elke CWE weer, gesorteerd op aantal kwetsbaarheden aflopend.
+SQL: SELECT cwe, COUNT(*) FROM vulnerability GROUP BY cwe ORDER BY COUNT(*) DESC;
+
+Vraag: Geef de CWE waarde en het aantal kwetsbaarheden weer voor de CWE's die meer dan 10 kwetsbaarheden hebben.
+SQL: SELECT cwe, COUNT(*) FROM vulnerability GROUP BY cwe HAVING COUNT(*) > 10;
+
+Vraag: Geef de titels weer van kwetsbaarheden die niet in de KEV catalogus zitten.
+SQL: SELECT title FROM vulnerability WHERE kev = FALSE;
+
+Vraag: Geef de CVE en CVSS score weer van de kwetsbaarheid met de hoogste CVSS score.
+SQL: SELECT cve, cvss FROM vulnerability ORDER BY cvss DESC LIMIT 1;
+
+Vraag: Geef de CVE van de oudste kwetsbaarheid.
+SQL: SELECT cve FROM vulnerability ORDER BY age DESC LIMIT 1;
+
+Vraag: Geef de CVE en titel weer van alle kwetsbaarheden waarvan de titel begint met 'Remote'.
+SQL: SELECT cve, title FROM vulnerability WHERE title LIKE 'Remote%';
+
+Vraag: Geef de CVE en titel weer van alle kwetsbaarheden waarvan de titel eindigt op 'Vulnerability'.
+SQL: SELECT cve, title FROM vulnerability WHERE title LIKE '%Vulnerability';
+
+Vraag: Geef alle informatie weer over kwetsbaarheden met een CVSS score van precies 10.0.
+SQL: SELECT * FROM vulnerability WHERE cvss = 10.0;
+
+Vraag: Hoeveel kwetsbaarheden hebben een confidence van minder dan 50?
+SQL: SELECT COUNT(*) FROM vulnerability WHERE confidence < 50;
+
+Vraag: Wat is de som van alle CVSS scores?
+SQL: SELECT SUM(cvss) FROM vulnerability;
+
+Vraag: Geef de gemiddelde EPSS score van kritieke kwetsbaarheden weer.
+SQL: SELECT AVG(epss) FROM vulnerability WHERE severity = 'critical';
+
+Vraag: Geef alle verschillende CWE's weer die voorkomen in de tabel.
+SQL: SELECT DISTINCT cwe FROM vulnerability;
+
+Vraag: Geef alle informatie weer over kwetsbaarheden met een leeftijd tussen 100 en 200 dagen.
+SQL: SELECT * FROM vulnerability WHERE age BETWEEN 100 AND 200;
+
+Vraag: Geef de CVE's weer van kwetsbaarheden die een confidence score hebben van 75, 80 of 90.
+SQL: SELECT cve FROM vulnerability WHERE confidence IN (75, 80, 90);
+
+Vraag: Geef alle kwetsbaarheden weer gesorteerd op ernst, en binnen elke ernst gesorteerd op CVSS score aflopend.
+SQL: SELECT * FROM vulnerability ORDER BY severity ASC, cvss DESC;
+
+Vraag: Geef de 10 meest voorkomende CWE's weer en hun aantallen.
+SQL: SELECT cwe, COUNT(*) AS count FROM vulnerability GROUP BY cwe ORDER BY count DESC LIMIT 10;
+
+Vraag: Vind alle kwetsbaarheden waarbij de CWE waarde NULL is.
+SQL: SELECT * FROM vulnerability WHERE cwe IS NULL;
+
+Vraag: Vind alle kwetsbaarheden waarbij de CWE waarde niet NULL is.
+SQL: SELECT * FROM vulnerability WHERE cwe IS NOT NULL;
+
+Vraag: Geef de titels weer van alle vulnerabilities waarvan de titel 50 karakters of langer is.
+SQL: SELECT title FROM vulnerability WHERE LENGTH(title) >= 50;
+
+Vraag: Hoeveel vulnerabilities zijn er met een 'medium' of 'high' severity?
+SQL: SELECT COUNT(*) FROM vulnerability WHERE severity IN ('medium', 'high');
+
+Vraag: Wat is de gemiddelde leeftijd van 'critical' en 'high' severity vulnerabilities?
+SQL: SELECT AVG(age) FROM vulnerability WHERE severity IN ('critical', 'high');
+
+Vraag: Geef de titel en CVSS score van alle vulnerabilities weer met een CVSS score hoger dan het gemiddelde.
+SQL: SELECT title, cvss FROM vulnerability WHERE cvss > (SELECT AVG(cvss) FROM vulnerability);
+
+Vraag: Geef de CVE van de oudste kwetsbaarheid met een kritieke ernst.
+SQL: SELECT cve FROM vulnerability WHERE severity = 'critical' ORDER BY age DESC LIMIT 1;
+
+Vraag: Hoeveel verschillende CWEs worden gebruikt voor kwetsbaarheden met een severity van 'high'?
+SQL: SELECT COUNT(DISTINCT cwe) FROM vulnerability WHERE severity = 'high';
+
+Vraag: Geef de titels van alle vulnerabilities weer die het woord 'SQL' (hoofdlettergevoelig) bevatten.
+SQL: SELECT title FROM vulnerability WHERE title LIKE '%SQL%';
+
+Vraag: Geef de titels van alle vulnerabilities weer die het woord 'SQL' bevatten, ongeacht de hoofdletters. (Afhankelijk van de database implementatie, kan dit anders).
+SQL: SELECT title FROM vulnerability WHERE LOWER(title) LIKE '%sql%';
+
+Vraag: Wat is het verschil tussen de hoogste en laagste CVSS score?
+SQL: SELECT MAX(cvss) - MIN(cvss) FROM vulnerability;
