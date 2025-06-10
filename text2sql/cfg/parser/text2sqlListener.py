@@ -220,6 +220,8 @@ class text2sqlListener(ParseTreeListener):
 
     # Exit a parse tree produced by text2sqlParser#text_comparison.
     def exitText_comparison(self, ctx:text2sqlParser.Text_comparisonContext):
+        if type(ctx.getChild(ctx.getChildCount() - 1)).__name__ == 'TerminalNodeImpl':
+            print(ctx.getChild(ctx.getChildCount() - 1).getText(), end='')
         if ctx.like() is not None:
             print('%\'', end='')
 
@@ -362,7 +364,7 @@ class text2sqlListener(ParseTreeListener):
 
     # Enter a parse tree produced by text2sqlParser#severity_scale.
     def enterSeverity_scale(self, ctx:text2sqlParser.Severity_scaleContext):
-        pass
+        print(ctx.getText(), end=' ')
 
     # Exit a parse tree produced by text2sqlParser#severity_scale.
     def exitSeverity_scale(self, ctx:text2sqlParser.Severity_scaleContext):
