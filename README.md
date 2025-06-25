@@ -2,7 +2,7 @@
 A repository containing the text2sql experiments carried out for my Research Internship at Radboud University. The pre-computed results can be found in the [text2sql_results folder](./text2sql_results/)
 
 ## Running experiments
-Make sure your [`config.ini` file](config.ini) is populated with valid fields for both the Azure OpenAI API and the database. Be aware that if you run the [experiments notebook](./text2sql_experiments.ipynb), it will overwrite the results saved in [text2sql_results folder](./text2sql_results/).
+Make sure your [`config.ini` file](config.ini) is populated with valid fields for both the Azure OpenAI API and the database. Be aware that if you run the [experiments notebook](./text2sql_experiments.ipynb), it will overwrite the results saved in [text2sql_results folder](./text2sql_results/), which will impact the [analysis notebook](./text2sql_analysis.ipynb)
 
 ### Azure OpenAI
 In the [`config.ini` file](config.ini), insert your API key and endpoint, so that the code for the experiments can connect to it:
